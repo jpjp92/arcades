@@ -1,0 +1,7 @@
+{
+  "name": "Neo-Brutalist Arcade Station",
+  "description": "A high-contrast, vibrant Neo-Brutalism style game hub featuring Minions and Hanbok themed games, enhanced with a Gemini-powered AI Game Master.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
