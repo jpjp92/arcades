@@ -38,7 +38,7 @@ const AIGameMaster: React.FC = () => {
             }));
 
             const result = await genAI.models.generateContent({
-                model: "gemini-2.0-flash-exp",
+                model: "gemini-2.5-flash",
                 contents: [...history, { role: 'user', parts: [{ text: input }] }],
             });
 
@@ -131,7 +131,17 @@ const AIGameMaster: React.FC = () => {
           group
         `}
             >
-                <span className="text-3xl">🤖</span>
+                {/* Neo-Brutalist Icon */}
+                <div className="relative w-8 h-8">
+                    {/* Main Circle */}
+                    <div className="absolute inset-0 bg-black rounded-full"></div>
+                    {/* Inner Circle */}
+                    <div className="absolute inset-[6px] bg-[#A3E635] rounded-full"></div>
+                    {/* Center Dot */}
+                    <div className="absolute inset-[12px] bg-black rounded-full"></div>
+                    {/* Top accent line */}
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1 w-4 h-1 bg-black"></div>
+                </div>
                 {!isOpen && (
                     <div className="absolute -top-12 right-0 bg-black text-white text-[10px] font-black uppercase px-2 py-1 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
                         Help me, Master!
