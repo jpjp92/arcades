@@ -25,3 +25,6 @@ dist-ssr
 .vercel
 .env*.local
 reference/
+fetch_real_models.js
+fetch_real_models_simple.js
+list_models_info.js
