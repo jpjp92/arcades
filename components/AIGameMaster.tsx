@@ -31,22 +31,40 @@ const AIGameMaster: React.FC = () => {
         setIsLoading(true);
 
         try {
-            // In @google/genai v1+, we use models.generateContent
-            const history = messages.map(msg => ({
+            // Transform history to parts format required by @google/genai
+            const contents = messages.map(msg => ({
                 role: msg.role === 'user' ? 'user' : 'model',
                 parts: [{ text: msg.text }],
             }));
 
+            // Add the new user message
+            contents.push({ role: 'user', parts: [{ text: input }] });
+
             const result = await genAI.models.generateContent({
-                model: "gemini-2.5-flash",
-                contents: [...history, { role: 'user', parts: [{ text: input }] }],
+                model: "gemini-2.5-flash-lite", // gemini-2.5-flash-lite 모델로 변경합니다.
+                contents: contents,
+                config: {
+                    systemInstruction: `You are the "AI Game Master" of Arcade Station.
+                    Your personality: Enthusiastic, cool, slightly tech-savvy, and neo-brutalist style.
+                    Your goal: Help users choose games and provide fun arcade trivia.
+                    Games available:
+                    1. Minion Puzzle: A fun slide puzzle with Minions.
+                    2. Minion Match: A memory card game.
+                    3. Hanbok Match: Korean traditional clothing animal memory game.
+                    
+                    Keep responses within 3 sentences. 
+                    Korean is the primary language, but respond in English if the user does.`,
+                    temperature: 0.8,
+                }
             });
 
-            const responseText = result.response.text() || "미안, 대답을 생성하지 못했어.";
+            // @google/genai v1.x에서는 결과 객체에 직접 text 프로퍼티가 있거나 
+            // choices[0].message.parts[0].text 형태로 접근합니다.
+            const responseText = result.text || "미안, 대답을 생성하지 못했어.";
             setMessages(prev => [...prev, { role: 'model', text: responseText }]);
         } catch (error) {
             console.error('AI Error:', error);
-            setMessages(prev => [...prev, { role: 'model', text: '미안, 지금은 대화가 조금 어려워. API 키를 확인해줄래?' }]);
+            setMessages(prev => [...prev, { role: 'model', text: '미안, 지금은 대화가 조금 어려워. (에러가 발생했어, 콘솔을 확인해줘!)' }]);
         } finally {
             setIsLoading(false);
         }
