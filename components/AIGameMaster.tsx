@@ -121,7 +121,7 @@ const AIGameMaster: React.FC = () => {
                             onChange={(e) => setInput(e.target.value)}
                             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                             placeholder="Type command..."
-                            className="flex-1 bg-transparent border-none outline-none text-white font-mono text-xs sm:text-sm placeholder:text-[#A3E635]/30"
+                            className="flex-1 bg-transparent border-none outline-none text-white font-mono text-base placeholder:text-[#A3E635]/30"
                             autoFocus
                         />
                         <button
