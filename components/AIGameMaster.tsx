@@ -71,24 +71,25 @@ const AIGameMaster: React.FC = () => {
     };
 
     return (
-        <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end">
+        <div className="fixed bottom-4 right-4 sm:bottom-8 sm:right-8 z-50 flex flex-col items-end">
             {/* Chat Window */}
             {isOpen && (
                 <div className={`
-          w-[320px] sm:w-[400px] h-[500px] 
+          w-[calc(100vw-32px)] sm:w-[380px] md:w-[400px]
+          h-[60vh] sm:h-[500px] 
           bg-black text-[#A3E635] 
           ${BRUTAL_CLASSES.border} 
-          shadow-[12px_12px_0px_0px_rgba(163,230,53,0.5)]
-          flex flex-col mb-6 animate-slide-up
+          shadow-[8px_8px_0px_0px_rgba(163,230,53,0.5)] sm:shadow-[12px_12px_0px_0px_rgba(163,230,53,0.5)]
+          flex flex-col mb-4 sm:mb-6 animate-slide-up
         `}>
                     {/* Header */}
-                    <div className="p-4 border-b-4 border-[#A3E635] flex justify-between items-center bg-[#1a1a1a]">
-                        <div className="font-black uppercase italic tracking-tighter text-xl text-[#A3E635]">
+                    <div className="p-3 sm:p-4 border-b-4 border-[#A3E635] flex justify-between items-center bg-[#1a1a1a]">
+                        <div className="font-black uppercase italic tracking-tighter text-lg sm:text-xl text-[#A3E635]">
                             AI Game Master
                         </div>
                         <button
                             onClick={() => setIsOpen(false)}
-                            className="font-black text-2xl leading-none hover:scale-125 transition-transform text-[#A3E635]"
+                            className="font-black text-xl sm:text-2xl leading-none hover:scale-125 transition-transform text-[#A3E635]"
                         >
                             ×
                         </button>
@@ -97,7 +98,7 @@ const AIGameMaster: React.FC = () => {
                     {/* Messages */}
                     <div
                         ref={scrollRef}
-                        className="flex-1 overflow-y-auto p-4 space-y-4 font-mono text-sm"
+                        className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4 font-mono text-xs sm:text-sm"
                     >
                         {messages.map((msg, i) => (
                             <div key={i} className={`${msg.role === 'user' ? 'text-white' : 'text-[#A3E635]'}`}>
@@ -113,21 +114,21 @@ const AIGameMaster: React.FC = () => {
                     </div>
 
                     {/* Input */}
-                    <div className="p-4 border-t-4 border-[#A3E635] bg-[#1a1a1a] flex gap-2">
+                    <div className="p-3 sm:p-4 border-t-4 border-[#A3E635] bg-[#1a1a1a] flex gap-2">
                         <input
                             type="text"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                            placeholder="Type your command..."
-                            className="flex-1 bg-transparent border-none outline-none text-white font-mono placeholder:text-[#A3E635]/30"
+                            placeholder="Type command..."
+                            className="flex-1 bg-transparent border-none outline-none text-white font-mono text-xs sm:text-sm placeholder:text-[#A3E635]/30"
                             autoFocus
                         />
                         <button
                             onClick={handleSend}
-                            className="font-black uppercase text-xs border-2 border-[#A3E635] px-2 py-1 hover:bg-[#A3E635] hover:text-black transition-colors"
+                            className="font-black uppercase text-[10px] sm:text-xs border-2 border-[#A3E635] px-2 py-1 hover:bg-[#A3E635] hover:text-black transition-colors"
                         >
-                            Execute
+                            EXECUTE
                         </button>
                     </div>
                 </div>
@@ -137,12 +138,12 @@ const AIGameMaster: React.FC = () => {
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className={`
-          w-16 h-16 
+          w-14 h-14 sm:w-16 sm:h-16 
           bg-[#FFD600] 
           ${BRUTAL_CLASSES.border} 
-          shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]
+          shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]
           hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]
-          hover:translate-x-[4px] hover:translate-y-[4px]
+          hover:translate-x-[2px] hover:translate-y-[2px] sm:hover:translate-x-[4px] sm:hover:translate-y-[4px]
           transition-all
           flex items-center justify-center
           relative
@@ -150,18 +151,18 @@ const AIGameMaster: React.FC = () => {
         `}
             >
                 {/* Neo-Brutalist Icon */}
-                <div className="relative w-8 h-8">
+                <div className="relative w-7 h-7 sm:w-8 sm:h-8">
                     {/* Main Circle */}
                     <div className="absolute inset-0 bg-black rounded-full"></div>
                     {/* Inner Circle */}
-                    <div className="absolute inset-[6px] bg-[#A3E635] rounded-full"></div>
+                    <div className="absolute inset-[5px] sm:inset-[6px] bg-[#A3E635] rounded-full"></div>
                     {/* Center Dot */}
-                    <div className="absolute inset-[12px] bg-black rounded-full"></div>
+                    <div className="absolute inset-[10px] sm:inset-[12px] bg-black rounded-full"></div>
                     {/* Top accent line */}
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1 w-4 h-1 bg-black"></div>
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1 w-3 sm:w-4 h-[3px] sm:h-1 bg-black"></div>
                 </div>
                 {!isOpen && (
-                    <div className="absolute -top-12 right-0 bg-black text-white text-[10px] font-black uppercase px-2 py-1 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="absolute -top-12 right-0 bg-black text-white text-[10px] font-black uppercase px-2 py-1 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity hidden sm:block">
                         Help me, Master!
                         <div className="absolute top-full right-4 border-[6px] border-transparent border-t-black"></div>
                     </div>
