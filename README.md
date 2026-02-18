@@ -38,12 +38,12 @@ graph TD
     User([User]) <--> UI[React Components]
     UI <--> Logic[Game Hub Logic]
     Logic <--> Gemini{{"Google Gemini 2.5 Flash-Lite"}}
-    subgraph "External Games"
+    subgraph EG ["External Games"]
         MinionP[Minion Puzzle]
         MinionM[Minion Match]
         HanbokM[Hanbok Match]
     end
-    UI -- "Browse/Launch" --> External Games
+    UI -- "Browse/Launch" --> EG
 ```
 
 ---
