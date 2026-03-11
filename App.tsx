@@ -84,12 +84,12 @@ const App: React.FC = () => {
         </main>
       ) : (
         <div className="fixed inset-0 z-50 bg-[#F4F2ED] flex flex-col sm:pt-4">
-          <div className="flex justify-between items-center px-4 py-3 sm:px-6 sm:py-4 border-b-4 sm:border-4 border-black bg-white sm:mx-4 sm:mt-2 mb-0 sm:mb-4 shadow-[0px_4px_0px_0px_rgba(0,0,0,1)] sm:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] z-10">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-black uppercase italic truncate mr-2 text-black">{selectedGame.title.replace('\n', ' ')}</h2>
+          <div className="flex justify-between items-center px-3 py-2 sm:px-6 sm:py-4 border-b-2 sm:border-4 border-black bg-white sm:mx-4 sm:mt-2 mb-0 sm:mb-4 shadow-[0px_2px_0px_0px_rgba(0,0,0,1)] sm:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] z-10">
+            <h2 className="text-base sm:text-2xl md:text-3xl font-black uppercase italic truncate mr-2 text-black leading-none">{selectedGame.title.replace('\n', ' ')}</h2>
             <button 
               onClick={handleBackToHome}
               className={`
-                px-4 py-1.5 sm:px-6 sm:py-2 bg-[#FFD100] font-black uppercase text-sm sm:text-lg text-black
+                px-3 py-1 sm:px-6 sm:py-2 bg-[#FFD100] font-black uppercase text-xs sm:text-lg text-black
                 border-2 sm:border-4 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]
                 hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]
                 active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] sm:active:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]
@@ -128,7 +128,7 @@ const App: React.FC = () => {
         </div>
       </footer>
 
-      <AIGameMaster />
+      {!selectedGame && <AIGameMaster />}
     </div>
   );
 };
