@@ -4,14 +4,19 @@ import { BRUTAL_CLASSES } from '../constants';
 
 interface GameCardProps {
     game: GameInfo;
+    onSelect: () => void;
 }
 
-const GameCard: React.FC<GameCardProps> = ({ game }) => {
+const GameCard: React.FC<GameCardProps> = ({ game, onSelect }) => {
+    const handleClick = (e: React.MouseEvent) => {
+        e.preventDefault();
+        onSelect();
+    };
+
     return (
         <a
             href={game.url}
-            target="_blank"
-            rel="noopener noreferrer"
+            onClick={handleClick}
             className={`
         group
         relative

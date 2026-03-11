@@ -1,10 +1,17 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import GameCard from './components/GameCard';
 import AIGameMaster from './components/AIGameMaster';
 import { GAMES, BRUTAL_CLASSES } from './constants';
+import { GameInfo } from './types';
 
 const App: React.FC = () => {
+  const [selectedGame, setSelectedGame] = useState<GameInfo | null>(null);
+
+  const handleBackToHome = () => {
+    setSelectedGame(null);
+  };
+
   return (
     <div className="min-h-screen selection:bg-black selection:text-[#A3E335] flex flex-col relative overflow-x-hidden bg-[#F4F2ED]">
       {/* --- PAPER TEXTURE & DECORATIVE BACKGROUND --- */}
@@ -63,11 +70,38 @@ const App: React.FC = () => {
       </header>
 
       {/* Main Content Grid */}
-      <main className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 mb-28 md:mb-32 w-full z-10">
-        {GAMES.map(game => (
-          <GameCard key={game.id} game={game} />
-        ))}
-      </main>
+      {!selectedGame ? (
+        <main className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 mb-28 md:mb-32 w-full z-10">
+          {GAMES.map(game => (
+            <GameCard key={game.id} game={game} onSelect={() => setSelectedGame(game)} />
+          ))}
+        </main>
+      ) : (
+        <div className="fixed inset-0 z-50 bg-[#F4F2ED] flex flex-col pt-4">
+          <div className="flex justify-between items-center px-6 py-4 border-b-4 border-black bg-white mx-4 mt-2 mb-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+            <h2 className="text-2xl md:text-3xl font-black uppercase italic">{selectedGame.title.replace('\n', ' ')}</h2>
+            <button 
+              onClick={handleBackToHome}
+              className={`
+                px-6 py-2 bg-[#FFD100] font-black uppercase text-lg
+                border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]
+                hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]
+                active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]
+                transition-all cursor-pointer
+              `}
+            >
+              Back Home
+            </button>
+          </div>
+          <div className="flex-1 mx-4 mb-4 border-4 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] overflow-hidden bg-white">
+            <iframe 
+              src={selectedGame.url} 
+              className="w-full h-full border-none"
+              title={selectedGame.title}
+            />
+          </div>
+        </div>
+      )}
 
       {/* Unified Footer - No white background, seamless with body */}
       <footer className="mt-auto py-12 px-4 border-t-[5px] md:border-t-[7px] border-black text-center bg-[#F4F2ED] z-20 relative">
