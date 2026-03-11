@@ -7,6 +7,12 @@ import { GameInfo } from './types';
 
 const App: React.FC = () => {
   const [selectedGame, setSelectedGame] = useState<GameInfo | null>(null);
+  const [isGameLoading, setIsGameLoading] = useState(false);
+
+  const handleSelectGame = (game: GameInfo) => {
+    setSelectedGame(game);
+    setIsGameLoading(true);
+  };
 
   const handleBackToHome = () => {
     setSelectedGame(null);
@@ -73,31 +79,38 @@ const App: React.FC = () => {
       {!selectedGame ? (
         <main className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 mb-28 md:mb-32 w-full z-10">
           {GAMES.map(game => (
-            <GameCard key={game.id} game={game} onSelect={() => setSelectedGame(game)} />
+            <GameCard key={game.id} game={game} onSelect={() => handleSelectGame(game)} />
           ))}
         </main>
       ) : (
-        <div className="fixed inset-0 z-50 bg-[#F4F2ED] flex flex-col pt-4">
-          <div className="flex justify-between items-center px-6 py-4 border-b-4 border-black bg-white mx-4 mt-2 mb-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-            <h2 className="text-2xl md:text-3xl font-black uppercase italic">{selectedGame.title.replace('\n', ' ')}</h2>
+        <div className="fixed inset-0 z-50 bg-[#F4F2ED] flex flex-col sm:pt-4">
+          <div className="flex justify-between items-center px-4 py-3 sm:px-6 sm:py-4 border-b-4 sm:border-4 border-black bg-white sm:mx-4 sm:mt-2 mb-0 sm:mb-4 shadow-[0px_4px_0px_0px_rgba(0,0,0,1)] sm:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] z-10">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-black uppercase italic truncate mr-2 text-black">{selectedGame.title.replace('\n', ' ')}</h2>
             <button 
               onClick={handleBackToHome}
               className={`
-                px-6 py-2 bg-[#FFD100] font-black uppercase text-lg
-                border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]
-                hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]
-                active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]
-                transition-all cursor-pointer
+                px-4 py-1.5 sm:px-6 sm:py-2 bg-[#FFD100] font-black uppercase text-sm sm:text-lg text-black
+                border-2 sm:border-4 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]
+                hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]
+                active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] sm:active:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]
+                transition-all cursor-pointer whitespace-nowrap
               `}
             >
               Back Home
             </button>
           </div>
-          <div className="flex-1 mx-4 mb-4 border-4 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] overflow-hidden bg-white">
+          <div className="flex-1 relative sm:mx-4 sm:mb-4 border-0 sm:border-4 border-black sm:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] overflow-hidden bg-white">
+            {isGameLoading && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-white z-20">
+                <div className="w-12 h-12 border-4 border-black border-t-[#FFD100] rounded-full animate-spin mb-4"></div>
+                <div className="font-black uppercase tracking-widest animate-pulse text-black">Loading Arcade...</div>
+              </div>
+            )}
             <iframe 
               src={selectedGame.url} 
-              className="w-full h-full border-none"
+              className={`w-full h-full border-none transition-opacity duration-500 bg-white ${isGameLoading ? 'opacity-0' : 'opacity-100'}`}
               title={selectedGame.title}
+              onLoad={() => setIsGameLoading(false)}
             />
           </div>
         </div>
